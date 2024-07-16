@@ -9,8 +9,8 @@ function HardCards(props) {
           <Card
             key={value.questionNo}
             number={value.questionNo}
-            description={value.description}
-            onClick={() => props.openModal(value.answer)} // Only activated when clicked thats why use of () =>
+            description={value.subdescription}
+            onClick={() => props.openModal(value.explanation, value.coding)}
             color = "bg-custom-red"
           />
         ))}

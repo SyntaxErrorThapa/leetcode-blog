@@ -2,143 +2,157 @@ import { Router } from "express";
 
 const questions = {
   easy: [
-    { questionNo: 1, description: "What is 2+2?", answer: "4" },
+    {
+      questionNo: 1,
+      subdescription: "Basic Math",
+      description: "Write a function to add two numbers.",
+      explanation:
+        "The function should take two numbers as input and return their sum.",
+      coding: `function add(a, b) {
+    return a + b;
+  }`,
+    },
     {
       questionNo: 2,
-      description: "What is the capital of France?asdfasdfadsf",
-      answer: "Paris",
-    },
-    { questionNo: 3, description: "What color is the sky?", answer: "Blue" },
-    { questionNo: 4, description: "How many days are in a week?", answer: "7" },
-    {
-      questionNo: 5,
-      description: "What is the capital of Italy?",
-      answer: "Rome",
+      subdescription: "String Manipulation",
+      description: "Write a function to reverse a string.",
+      explanation:
+        "The function should take a string as input and return the reversed string.",
+      coding: `function reverseString(str) {
+    return str.split('').reverse().join('');
+  }`,
     },
     {
-      questionNo: 6,
-      description: "How many legs does a spider have?",
-      answer: "8",
+      questionNo: 3,
+      subdescription: "Looping",
+      description: "Write a function to print numbers from 1 to 10.",
+      explanation:
+        "The function should use a loop to print numbers from 1 to 10.",
+      coding: `function printNumbers() {
+    for (let i = 1; i <= 10; i++) {
+      console.log(i);
+    }
+  }`,
     },
-    {
-      questionNo: 7,
-      description: "What is the largest planet in our solar system?",
-      answer: "Jupiter",
-    },
-    { questionNo: 8, description: "What is the sum of 5 and 3?", answer: "8" },
-    {
-      questionNo: 9,
-      description: "What is the color of grass?",
-      answer: "Green",
-    },
-    // Add more easy questions here
   ],
   medium: [
     {
       questionNo: 1,
-      description: "What is the square root of 16?",
-      answer: "4",
+      subdescription: "Array Operations",
+      description: "Write a function to find the maximum element in an array.",
+      explanation:
+        "The function should take an array as input and return the maximum element in the array.",
+      coding: `function findMax(arr) {
+    return Math.max(...arr);
+  }`,
     },
     {
       questionNo: 2,
-      description: "Name the process plants use to make food.",
-      answer: "Photosynthesis",
+      subdescription: "Sorting",
+      description:
+        "Write a function to sort an array of numbers in ascending order.",
+      explanation:
+        "The function should take an array of numbers as input and return the sorted array.",
+      coding: `function sortArray(arr) {
+    return arr.sort((a, b) => a - b);
+  }`,
     },
     {
       questionNo: 3,
-      description: "What is the chemical formula for water?",
-      answer: "H2O",
-    },
-    {
-      questionNo: 4,
-      description: "What is the capital of Canada?",
-      answer: "Ottawa",
-    },
-    {
-      questionNo: 5,
-      description: "Who wrote 'Romeo and Juliet'?",
-      answer: "William Shakespeare",
-    },
-    {
-      questionNo: 6,
-      description: "What is the smallest prime number?",
-      answer: "2",
-    },
-    {
-      questionNo: 7,
-      description: "What is the hardest natural substance on Earth?",
-      answer: "Diamond",
-    },
-    {
-      questionNo: 8,
-      description: "What is the speed of light in vacuum?",
-      answer: "299,792,458 meters per second",
-    },
-    {
-      questionNo: 9,
-      description: "What element does 'O' represent on the periodic table?",
-      answer: "Oxygen",
-    },
-    {
-      questionNo: 10,
-      description: "What is the currency of Japan?",
-      answer: "Yen",
+      subdescription: "Recursion",
+      description: "Write a function to calculate the factorial of a number.",
+      explanation:
+        "The function should use recursion to calculate the factorial of a number.",
+      coding: `function factorial(n) {
+    if (n === 0) {
+      return 1;
+    }
+    return n * factorial(n - 1);
+  }`,
     },
   ],
   hard: [
     {
       questionNo: 1,
-      description: "What is the derivative of x^2?",
-      answer: "2x",
+      subdescription: "Dynamic Programming",
+      description: "Write a function to find the nth Fibonacci number.",
+      explanation:
+        "The function should use dynamic programming to find the nth Fibonacci number.",
+      coding: `function fibonacci(n) {
+    let fib = [0, 1];
+    for (let i = 2; i <= n; i++) {
+      fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib[n];
+  }`,
     },
     {
       questionNo: 2,
-      description: "What is the capital of Mongolia?",
-      answer: "Ulaanbaatar",
+      subdescription: "Graph Algorithms",
+      description:
+        "Write a function to perform a depth-first search on a graph.",
+      explanation:
+        "The function should take a graph and a starting node as input and perform a depth-first search.",
+      coding: `function dfs(graph, start, visited = new Set()) {
+    visited.add(start);
+    console.log(start);
+    for (let neighbor of graph[start]) {
+      if (!visited.has(neighbor)) {
+        dfs(graph, neighbor, visited);
+      }
+    }
+  }`,
     },
     {
       questionNo: 3,
-      description: "What is the Heisenberg Uncertainty Principle?",
-      answer:
-        "It's impossible to simultaneously measure the exact position and momentum of a particle.",
+      subdescription: "String Matching",
+      description:
+        "Write a function to implement the Knuth-Morris-Pratt string matching algorithm.",
+      explanation:
+        "The function should take two strings, text and pattern, and return the starting index of the pattern in the text or -1 if the pattern is not found.",
+      coding: `function kmpSearch(text, pattern) {
+    function buildLPS(pattern) {
+      let lps = Array(pattern.length).fill(0);
+      let len = 0;
+      let i = 1;
+      while (i < pattern.length) {
+        if (pattern[i] === pattern[len]) {
+          len++;
+          lps[i] = len;
+          i++;
+        } else {
+          if (len !== 0) {
+            len = lps[len - 1];
+          } else {
+            lps[i] = 0;
+            i++;
+          }
+        }
+      }
+      return lps;
+    }
+  
+    let lps = buildLPS(pattern);
+    let i = 0;
+    let j = 0;
+    while (i < text.length) {
+      if (pattern[j] === text[i]) {
+        i++;
+        j++;
+      }
+      if (j === pattern.length) {
+        return i - j;
+      } else if (i < text.length && pattern[j] !== text[i]) {
+        if (j !== 0) {
+          j = lps[j - 1];
+        } else {
+          i++;
+        }
+      }
+    }
+    return -1;
+  }`,
     },
-    {
-      questionNo: 4,
-      description: "What is the integral of 1/x dx?",
-      answer: "ln|x| + C",
-    },
-    {
-      questionNo: 5,
-      description: "Name the longest river in the world.",
-      answer: "Nile River",
-    },
-    {
-      questionNo: 6,
-      description: "Who is the author of 'The Divine Comedy'?",
-      answer: "Dante Alighieri",
-    },
-    {
-      questionNo: 7,
-      description: "What is Schrödinger's cat thought experiment?",
-      answer:
-        "A quantum mechanics paradox where a cat can be both alive and dead.",
-    },
-    {
-      questionNo: 8,
-      description: "What is the speed of sound in air?",
-      answer: "Approximately 343 meters per second",
-    },
-    {
-      questionNo: 9,
-      description: "What is the formula for the area of a circle?",
-      answer: "πr^2",
-    },
-    {
-      questionNo: 10,
-      description: "What is the highest mountain in the world?",
-      answer: "Mount Everest",
-    },
-    { questionNo: 33, description: "delta", answer: "despacito" },
   ],
 };
 

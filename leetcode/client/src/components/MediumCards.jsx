@@ -9,8 +9,8 @@ function MediumCard(props) {
           <Card
             key={value.questionNo}
             number={value.questionNo}
-            description={value.description}
-            onClick={() => props.openModal(value.answer)}
+            description={value.subdescription}
+            onClick={() => props.openModal(value.explanation, value.coding)}
             color="bg-custom-orange"
           />
         ))}
