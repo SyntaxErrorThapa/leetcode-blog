@@ -10,6 +10,7 @@ function HardCards(props) {
             key={value.questionNo}
             number={value.questionNo}
             description={value.description}
+            onClick={() => props.openModal(value.answer)} // Only activated when clicked thats why use of () =>
           />
         ))}
       </div>
