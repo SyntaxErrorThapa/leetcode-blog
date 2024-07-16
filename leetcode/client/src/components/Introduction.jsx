@@ -39,10 +39,10 @@ function Introduction() {
   return (
     <div className="container mx-auto flex flex-row justify-center space-x-4">
       {/* For Easy Problem */}
-      <EasyCard easyQuestions={problems.easy} />
+      <EasyCard easyQuestions={problems.easy} openModal={openModal}/>
 
       {/* For Medium Problem */}
-      <MediumCard mediumQuestions={problems.medium} />
+      <MediumCard mediumQuestions={problems.medium} openModal={openModal}/>
 
       {/* For Hard Problem */}
       <HardCards openModal={openModal} hardQuestions={problems.hard} />
