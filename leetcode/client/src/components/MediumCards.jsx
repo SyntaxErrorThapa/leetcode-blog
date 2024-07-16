@@ -11,6 +11,7 @@ function MediumCard(props) {
             number={value.questionNo}
             description={value.description}
             onClick={() => props.openModal(value.answer)}
+            color="bg-custom-orange"
           />
         ))}
       </div>

@@ -7,6 +7,9 @@ module.exports = {
         'custom-bg': '#1A202C',  // Dark background color
         'custom-text': '#FFFFFF', // White text color for high contrast
         'accent-color': '#FFD700', // Gold accent color for a highlight
+        'custom-green':'#10B981', 
+        'custom-orange': '#F59E0B', 
+        'custom-red':'#F43F5E',
       },
       fontFamily: {
         fira: ["Fira Code", "monospace"], // Add your custom font

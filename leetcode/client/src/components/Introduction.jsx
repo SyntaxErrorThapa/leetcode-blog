@@ -7,19 +7,10 @@ import Modal from "./Modal";
 function Introduction() {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalcontent, setModalContent] = useState(null);
-  console.log(`Modal Content ${modalcontent}`)
-  // Trigger modal show
-  const openModal = (content) => {
-    setModalContent(content);
-    setModalVisible(true);
-  };
-
-  // Trigger modal close
-  const closeModal = () => {
-    setModalVisible(false);
-    setModalContent(null);
-  };
+  const [modalContent, setModalContent] = useState({
+    questionNo: "",
+    description: "",
+  });
 
   useEffect(() => {
     fetch("/get-question")
@@ -31,24 +22,37 @@ function Introduction() {
           hard: data.questions.hard,
         });
       })
+      .catch((error) => console.error("Error fetching questions:", error));
+  }, []); // Empty dependency array means this runs once after the initial render
 
-      .catch((error) => console.error("Error at route get-question", error));
-  }, []);
+  const openModal = (content) => {
+    setModalContent(content);
+    setModalVisible(true);
+  };
 
-  console.log(problems);
+  const closeModal = () => {
+    setModalVisible(false);
+    setModalContent({ questionNo: "", description: "" });
+  };
+
   return (
-    <div className="container mx-auto flex flex-row justify-center space-x-4">
-      {/* For Easy Problem */}
-      <EasyCard easyQuestions={problems.easy} openModal={openModal}/>
+    <div className="flex flex-col items-center space-y-8">
+      <div className="container mx-auto flex flex-row justify-center space-x-8">
+        <div className="text-center h-screen overflow-y-auto no-scrollbar">
+          <div className="font-bold text-3xl mt-6 mb-4 ">Easy: {problems.easy.length}</div>
+          <EasyCard easyQuestions={problems.easy} openModal={openModal} />
+        </div>
+        <div className="text-center h-screen overflow-y-auto no-scrollbar">
+          <div className="font-bold text-3xl mt-6 mb-4">Medium: {problems.medium.length}</div>
+          <MediumCard mediumQuestions={problems.medium} openModal={openModal} />
+        </div>
+        <div className="text-center h-screen overflow-y-auto no-scrollbar">
+          <div className="font-bold text-3xl mt-6 mb-4">Hard: {problems.medium.length}</div>
+          <HardCards hardQuestions={problems.hard} openModal={openModal} />
+        </div>
+      </div>
 
-      {/* For Medium Problem */}
-      <MediumCard mediumQuestions={problems.medium} openModal={openModal}/>
-
-      {/* For Hard Problem */}
-      <HardCards openModal={openModal} hardQuestions={problems.hard} />
-
-      {/* If modalVisible is true then only execute the Modal div */}
-      { modalVisible && <Modal content={modalcontent} closeModal={closeModal}/>} 
+      {modalVisible && <Modal content={modalContent} closeModal={closeModal} />}
     </div>
   );
 }
