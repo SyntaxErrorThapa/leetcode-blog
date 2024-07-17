@@ -3,6 +3,7 @@ import EasyCard from "./EasyCards";
 import MediumCard from "./MediumCards";
 import HardCards from "./HardCards";
 import Modal from "./Modal";
+import SpeedDialButton from "./SpeedDial";
 
 function Introduction() {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
@@ -26,7 +27,7 @@ function Introduction() {
   }, []); // Empty dependency array means this runs once after the initial render
 
   const openModal = (explanation, coding) => {
-    setModalContent({explanation : explanation, coding : coding});
+    setModalContent({ explanation: explanation, coding: coding });
     setModalVisible(true);
   };
 
@@ -53,7 +54,7 @@ function Introduction() {
           <MediumCard mediumQuestions={problems.medium} openModal={openModal} />
         </div>
         {/* Hard Card Div Start */}
-        <div className="text-center h-screen overflow-y-auto no-scrollbar">
+        <div className="text-center h-screen overflow-y-auto no-scrollbar relative">
           <div className="font-bold text-3xl mt-6 mb-4">
             Hard: {problems.hard.length}
           </div>
@@ -61,7 +62,17 @@ function Introduction() {
         </div>
       </div>
 
-      {modalVisible && <Modal explanation={modalContent.explanation} coding={modalContent.coding} handleClose={closeModal} open={openModal}/>}
+      {modalVisible && (
+        <Modal
+          explanation={modalContent.explanation}
+          coding={modalContent.coding}
+          handleClose={closeModal}
+          open={openModal}
+        />
+      )}
+
+      {/* Position for SpeedDialButton */}
+      <SpeedDialButton />
     </div>
   );
 }
