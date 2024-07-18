@@ -2,39 +2,14 @@ import React, { useEffect, useState } from "react";
 import EasyCard from "./EasyCards";
 import MediumCard from "./MediumCards";
 import HardCards from "./HardCards";
-import Modal from "./Modal";
-import SpeedDialButton from "./SpeedDial";
+import Modal from "./ModalComponent/Modal";
+import SpeedDialButton from "./SpeedDialButton";
+import { useQuestions } from "./useQuestions";
+import { useModal } from "./useModal";
 
 function Introduction() {
-  const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalContent, setModalContent] = useState({
-    explanation: "",
-    coding: "",
-  });
-
-  useEffect(() => {
-    fetch("/get-question")
-      .then((response) => response.json())
-      .then((data) => {
-        setProblems({
-          easy: data.questions.easy,
-          medium: data.questions.medium,
-          hard: data.questions.hard,
-        });
-      })
-      .catch((error) => console.error("Error fetching questions:", error));
-  }, []); // Empty dependency array means this runs once after the initial render
-
-  const openModal = (explanation, coding) => {
-    setModalContent({ explanation: explanation, coding: coding });
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-    setModalContent({ explanation: "", coding: "" });
-  };
+  const problems = useQuestions();
+  const { modalVisible, modalContent, openModal, closeModal } = useModal();
 
   return (
     <div className="flex flex-col items-center space-y-8">
@@ -68,11 +43,12 @@ function Introduction() {
           coding={modalContent.coding}
           handleClose={closeModal}
           open={openModal}
+          isAdd={modalContent.isAdd}
         />
       )}
 
       {/* Position for SpeedDialButton */}
-      <SpeedDialButton />
+      <SpeedDialButton openModal={openModal}/>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import SpeedDialButton from "./SpeedDial";
+import SpeedDialButton from "./SpeedDialButton";
 
 function Footer() {
   return (

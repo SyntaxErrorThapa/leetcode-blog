@@ -11,7 +11,7 @@ function EasyCard(props) {
             key={value.questionNo}
             number={value.questionNo}
             description={value.subdescription}
-            onClick={() => props.openModal(value.explanation, value.coding)}
+            onClick={() => props.openModal(value.explanation, value.coding, false)}
             color="bg-custom-green"
           />
         ))}
