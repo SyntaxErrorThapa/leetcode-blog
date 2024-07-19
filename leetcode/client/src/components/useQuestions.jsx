@@ -4,7 +4,7 @@ export const useQuestions = () => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
 
   useEffect(() => {
-    fetch("/get-question")
+    fetch("/question")
       .then((response) => response.json())
       .then((data) => {
         setProblems({

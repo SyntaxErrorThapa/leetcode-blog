@@ -53,7 +53,7 @@ function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
         {!isAdd ? (
           <>
             {/* Modal Explanation section */}
-            <ModalExplanation explanation={explanation} />
+            <ModalExplanation explanation={explanation}/>
 
             {/* Modal Coding section */}
             <ModalCoding coding={coding} />
@@ -61,7 +61,7 @@ function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
         ) : (
           <>
           {/* Modal Add Questions */}
-          <ModalAddQuestion />
+          <ModalAddQuestion  onClose={handleClose}/>
           </>
         )}
       </Box>

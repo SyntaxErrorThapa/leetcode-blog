@@ -5,6 +5,9 @@ import questionRouter from "./routes/Question.js";  // Ensure this path is corre
 const app = express();
 const port = 5000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Use the question router
 app.use('/', questionRouter);
 
