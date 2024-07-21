@@ -54,7 +54,7 @@ function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
           <>
             {/* Modal Explanation section */}
             <ModalExplanation explanation={explanation}/>
-
+            
             {/* Modal Coding section */}
             <ModalCoding coding={coding} />
           </>

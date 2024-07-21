@@ -1,13 +1,35 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Chip,
+  Box,
+  OutlinedInput,
+} from "@mui/material";
 import Button from "@mui/material/Button";
 
 const categories = [
-  { value: 0, label: "Dynamic" },
-  { value: 1, label: "Tree" },
+  { value: 0, label: "Arrays & Hashing" },
+  { value: 1, label: "Two Pointers" },
+  { value: 2, label: "Stack" },
+  { value: 3, label: "Binary Search" },
+  { value: 4, label: "Sliding Window" },
+  { value: 5, label: "Linked List" },
+  { value: 6, label: "Trees" },
+  { value: 7, label: "Tries" },
+  { value: 8, label: "Backtracking" },
+  { value: 9, label: "Heap / Priority Queue" },
+  { value: 10, label: "Intervals" },
+  { value: 11, label: "Greedy" },
+  { value: 12, label: "Advanced Graphs" },
+  { value: 13, label: "Graphs" },
+  { value: 14, label: "Dynamic Programming" },
+  { value: 15, label: "Bit Manipulations" },
+  { value: 16, label: "Tree" },
 ];
 
 const levels = [
@@ -20,12 +42,13 @@ function ModalAddQuestion({ onClose }) {
   const [formdata, setFormdata] = useState({
     number: "",
     subheading: "",
-    category: "",
+    category: [],
     level: "",
     question_description: "",
     explanation: "",
     picture: "",
     code: "",
+    code_link: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -52,12 +75,13 @@ function ModalAddQuestion({ onClose }) {
       setFormdata({
         number: "",
         subheading: "",
-        category: "",
+        category: [],
         level: "",
         question_description: "",
         explanation: "",
         picture: "",
         code: "",
+        code_link: "",
       });
     } catch (error) {
       alert(error);
@@ -128,7 +152,7 @@ function ModalAddQuestion({ onClose }) {
 
         {/* Row 2 */}
         <div className="flex flex-row space-x-4">
-          <TextField
+          {/* <TextField
             id="category"
             onChange={handleChange}
             select
@@ -142,7 +166,25 @@ function ModalAddQuestion({ onClose }) {
                 {option.label}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
+          <FormControl sx={{ m: 1, width: "100%" }}>
+            <InputLabel id="category-label">Category</InputLabel>
+            <Select
+              labelId="category-label"
+              id="category"
+              multiple
+              value={formdata.category}
+              onChange={handleChange}
+              name="category"
+              input={<OutlinedInput label="Category" />}
+            >
+              {categories.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
           <TextField
             onChange={handleChange}
@@ -216,7 +258,21 @@ function ModalAddQuestion({ onClose }) {
             sx={{ width: "100%" }}
           />
         </div>
+
         {/* Row 7 */}
+        <div className="flex flex-row space-x-4">
+          <TextField
+            onChange={handleChange}
+            id="code_link"
+            label="Leetcode Link"
+            name="code_link"
+            value={formdata.code_link}
+            multiline
+            sx={{ width: "100%" }}
+          />
+        </div>
+
+        {/* Row 8 */}
         <Button
           variant="contained"
           type="submit"
