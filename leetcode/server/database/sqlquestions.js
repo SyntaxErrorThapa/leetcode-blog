@@ -25,8 +25,8 @@ class Question {
     question_description,
     explanation,
     picture,
-    code, 
-    code_link,
+    code,
+    code_link
   ) {
     const query =
       "INSERT INTO leetcode_questions (number, subheading, category, level, description, explanation, picture, code, code_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
@@ -40,12 +40,25 @@ class Question {
         explanation,
         picture,
         code,
-        code_link
+        code_link,
       ]);
       return add_confirm;
     } catch (error) {
       throw ("Error at addQuestions ", error);
     }
+  }
+
+  formatQuestion(value) {
+    return {
+      questionNo: value.number,
+      subdescription: value.subheading,
+      description: value.description,
+      explanation: value.explanation,
+      coding: value.code,
+      code_link: value.code_link,
+      picture: value.picture,
+      category: value.category,
+    };
   }
 
   /**
@@ -55,7 +68,23 @@ class Question {
     const query = "SELECT * FROM leetcode_questions";
     try {
       const returned_questions = await this.db.query(query);
-      return returned_questions.rows;
+      var questions = {
+        easy: [],
+        medium: [],
+        hard: [],
+      };
+
+      returned_questions.rows.map((value) => {
+        if (value.level == 0) {
+          // Easy level
+          questions["easy"].push(this.formatQuestion(value));
+        } else if (value.level == 1) {
+          questions["medium"].push(this.formatQuestion(value));
+        } else {
+          questions["hard"].push(this.formatQuestion(value));
+        }
+      });
+      return questions;
     } catch (error) {
       throw ("Error at getallquestions", error);
     }

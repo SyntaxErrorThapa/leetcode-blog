@@ -10,7 +10,19 @@ function MediumCard(props) {
             key={value.questionNo}
             number={value.questionNo}
             description={value.subdescription}
-            onClick={() => props.openModal(value.explanation, value.coding, false)}
+            onClick={() =>
+              props.openModal(
+                value.explanation,
+                value.coding,
+                false,
+                value.subdescription,
+                value.description,
+                value.questionNo,
+                value.code_link,
+                value.picture,
+                value.category
+              )
+            }
             color="bg-custom-orange"
           />
         ))}

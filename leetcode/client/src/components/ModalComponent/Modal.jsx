@@ -5,6 +5,8 @@ import ModalExplanation from "./ModalExplanation";
 import ModalCoding from "./ModalCoding";
 import ModalHeader from "./ModalHeader";
 import ModalAddQuestion from "./ModalAddQuestion";
+import ModalAnswer from "./ModalAnswer";
+import ModalQuestionLink from "./ModalQuestionLink";
 
 const style = {
   position: "absolute",
@@ -12,7 +14,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90vw", // Relative width
-  maxWidth: "800px", // Maximum width
+  maxWidth: "1200px", // Maximum width
   height: "auto", // Dynamic height based on content
   maxHeight: "90vh", // Maximum height to ensure it doesn't exceed viewport height
   bgcolor: "#1e1e1e", // Dark background color
@@ -25,8 +27,14 @@ const style = {
   overflowY: "auto", // Scroll content if overflow
 };
 
-function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
-  console.log(isAdd)
+function CustomModal({
+  modalContent,
+  open,
+  handleClose,
+  isAdd,
+  fetchQuestions,
+}) {
+  console.log(isAdd);
   return (
     <Modal
       open={open}
@@ -43,7 +51,7 @@ function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
           }}
         >
           {/* Modal Heading */}
-          <ModalHeader heading="Explanation" />
+          {!isAdd ? <ModalHeader number={modalContent.questionNo} heading={modalContent.subdescription} /> : <ModalHeader heading="New Question Form" />}
           <IconButton onClick={handleClose} sx={{ color: "#fff" }}>
             <CloseIcon />
           </IconButton>
@@ -52,16 +60,25 @@ function CustomModal({ explanation, coding, open, handleClose, isAdd }) {
         {/* Modal Question */}
         {!isAdd ? (
           <>
-            {/* Modal Explanation section */}
-            <ModalExplanation explanation={explanation}/>
+            {/* Modal Question Description section */}
+            <ModalExplanation explanation={modalContent.description} />
             
+            {/* Modal Explanation */}
+            <ModalAnswer answer={modalContent.explanation} />
+
             {/* Modal Coding section */}
-            <ModalCoding coding={coding} />
+            <ModalCoding coding={modalContent.coding} />
+
+            {/* Modal Question Link */}
+            <ModalQuestionLink questionLink={modalContent.code_link} />
           </>
         ) : (
           <>
-          {/* Modal Add Questions */}
-          <ModalAddQuestion  onClose={handleClose}/>
+            {/* Modal Add Questions */}
+            <ModalAddQuestion
+              onClose={handleClose}
+              fetchQuestions={fetchQuestions}
+            />
           </>
         )}
       </Box>

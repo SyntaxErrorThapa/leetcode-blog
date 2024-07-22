@@ -53,12 +53,11 @@ const router = Router();
 
 router.get("/question", async (req, res) => {
   try {
-    const all_questions = await question.getAllQuestion()
-    console.log(all_questions);
+    const all_questions = await question.getAllQuestion();
+    res.json({ questions: all_questions });
   } catch (error) {
-    res.status(500).json({error : `Error at route /question ${error}`});
+    res.status(500).json({ error: `Error at route /question ${error}` });
   }
-  res.json({ questions: questions });
 });
 
 router.post("/question", async (req, res) => {
@@ -73,7 +72,7 @@ router.post("/question", async (req, res) => {
       explanation,
       picture,
       code,
-      code_link
+      code_link,
     } = req.body;
     // console.log(number);
     await question.addQuestion(

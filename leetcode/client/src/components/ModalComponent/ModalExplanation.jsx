@@ -1,11 +1,15 @@
 import React from "react";
-import { Typography } from "@mui/material";
 
-function ModalExplanation( {explanation} ) {
+function ModalExplanation({ explanation }) {
   return (
-    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-      {explanation}
-    </Typography>
+    <>
+      <div className="flex flex-col m-1 p-3 border-2 rounded-lg">
+        <p className="font-bold">
+          Question Description: 
+        </p>
+        <p className="whitespace-pre-wrap">{explanation}</p>
+        </div>
+    </>
   );
 }
 export default ModalExplanation;

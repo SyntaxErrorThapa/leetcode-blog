@@ -8,7 +8,7 @@ import { useQuestions } from "./useQuestions";
 import { useModal } from "./useModal";
 
 function Introduction() {
-  const problems = useQuestions();
+  const { problems, fetchQuestions } = useQuestions();
   const { modalVisible, modalContent, openModal, closeModal } = useModal();
 
   return (
@@ -39,16 +39,16 @@ function Introduction() {
 
       {modalVisible && (
         <Modal
-          explanation={modalContent.explanation}
-          coding={modalContent.coding}
+          modalContent={modalContent}
           handleClose={closeModal}
           open={openModal}
           isAdd={modalContent.isAdd}
+          fetchQuestions={fetchQuestions}
         />
       )}
 
       {/* Position for SpeedDialButton */}
-      <SpeedDialButton openModal={openModal}/>
+      <SpeedDialButton openModal={openModal} />
     </div>
   );
 }

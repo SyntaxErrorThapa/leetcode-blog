@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useQuestions = () => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
 
-  useEffect(() => {
+  const fetchQuestions = useCallback(() => {
     fetch("/question")
       .then((response) => response.json())
       .then((data) => {
@@ -16,5 +16,9 @@ export const useQuestions = () => {
       .catch((error) => console.error("Error fetching questions:", error));
   }, []); // Empty dependency array means this runs once after the initial render
 
-  return problems;
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
+
+  return {problems, fetchQuestions};
 };

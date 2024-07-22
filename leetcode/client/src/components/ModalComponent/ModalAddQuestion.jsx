@@ -38,7 +38,7 @@ const levels = [
   { value: 2, label: "Hard" },
 ];
 
-function ModalAddQuestion({ onClose }) {
+function ModalAddQuestion({ onClose, fetchQuestions }) {
   const [formdata, setFormdata] = useState({
     number: "",
     subheading: "",
@@ -63,7 +63,9 @@ function ModalAddQuestion({ onClose }) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    
     submitFormData();
+    fetchQuestions();
   }
 
   async function submitFormData() {
