@@ -29,12 +29,22 @@ function ModalLogin() {
 
   const onGoogleLogin = async () => {
     try {
-        console.log("Click")
-      const response = await axios.get("/auth/google");
-      
+        console.log("Clicked");
+      const response = await axios.post(
+        "/auth-google",
+        {
+          data: { someKey: "someValue" },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // Adjust if needed
+          },
+        }
+      );
+
       console.log(response);
     } catch (error) {
-      console.log(error);
+      console.log("Error logging in:", error);
     }
   };
 
