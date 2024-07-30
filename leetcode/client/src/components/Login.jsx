@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import axios from "axios";
 
+const webURL = "http://localhost:5000";
+
 const style = {
   display: "flex",
   justifyContent: "center",
@@ -27,25 +29,9 @@ function ModalLogin() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const onGoogleLogin = async () => {
-    try {
-        console.log("Clicked");
-      const response = await axios.post(
-        "/auth-google",
-        {
-          data: { someKey: "someValue" },
-        },
-        {
-          headers: {
-            "Content-Type": "application/json", // Adjust if needed
-          },
-        }
-      );
-
-      console.log(response);
-    } catch (error) {
-      console.log("Error logging in:", error);
-    }
+  const onGoogleLogin = () => {
+    console.log("Google Login");
+    window.location.href = `${webURL}/auth/google`;
   };
 
   return (
