@@ -4,11 +4,13 @@ import googleAuthRouter from "./routes/GoogleAuth.js";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import session from "express-session";
+import "dotenv/config";
+import User from "./database/users.js";
 
 const app = express();
 const port = 5000;
 
-const users = [] // Delete Later
+const users = new User();
 
 // Middle ware for parsing the request body
 app.use(express.json());
@@ -35,12 +37,21 @@ passport.use(
       clientSecret: process.env.AUTHCLIENTSECRET,
       callbackURL: "http://localhost:5000/google/callback",
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
+      // console.log(profile);
       // Simulate finding or creating a user in your database
-      let user = users.find(u => u.googleId === profile.id);
-      if (!user) {
-        user = { googleId: profile.id, name: profile.displayName };
-        users.push(user);
+      let user = await users.findUser(profile.id);
+      console.log(user);
+      // let user = users.find(u => u.googleId === profile.id);
+      if (user.length === 0) {
+        await users.addUser(
+          profile.displayName,
+          profile.emails[0].value,
+          profile.name.givenName,
+          profile.name.familyName,
+          profile.photos[0].value,
+          profile.id
+        );
       }
       return done(null, user);
     }
