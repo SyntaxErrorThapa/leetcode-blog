@@ -3,6 +3,11 @@ import passport from "passport";
 
 const router = Router();
 
+// Middle ware to check if the user is authenticated
+const isLoggedIn = (req, res, next) => {
+  req.user ? next() : res.sendStatus(401);
+};
+
 // Route for Google authentication and login
 router.get("/auth/google", (req, res, next) => {
   console.log("Auth route hit");
@@ -17,9 +22,27 @@ router.get("/auth/google", (req, res, next) => {
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/",
+    successRedirect: "http://localhost:3000/auth/status",
     failureRedirect: "/login",
   })
 );
+
+// Route to check if the user is authenticated
+router.get("/auth/status", isLoggedIn, (req, res) => {
+  console.log("User is authenticated");
+  res.status(200).json({ isLogged: true, user: req.user });
+});
+
+// Route to logout the user
+// Route to logout the user
+router.get("/auth/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.session.destroy();
+    res.status(200).json({ message: "Logged out successfully" });
+  });
+});
 
 export default router;

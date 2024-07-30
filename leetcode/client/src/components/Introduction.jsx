@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EasyCard from "./EasyCards";
 import MediumCard from "./MediumCards";
 import HardCards from "./HardCards";
@@ -6,11 +6,13 @@ import Modal from "./ModalComponent/Modal";
 import SpeedDialButton from "./SpeedDialButton";
 import { useQuestions } from "./useQuestions";
 import { useModal } from "./useModal";
+import { useAuth } from "./AuthContext";
 
 function Introduction() {
   const { problems, fetchQuestions } = useQuestions();
   const { modalVisible, modalContent, openModal, closeModal } = useModal();
-
+  const { isLogged } = useAuth();
+  console.log(isLogged);
   return (
     <div className="flex flex-col items-center space-y-8">
       <div className="container mx-auto flex flex-row justify-center space-x-8">
@@ -48,7 +50,7 @@ function Introduction() {
       )}
 
       {/* Position for SpeedDialButton */}
-      <SpeedDialButton openModal={openModal} />
+      {isLogged.logStatus && <SpeedDialButton openModal={openModal} />}
     </div>
   );
 }

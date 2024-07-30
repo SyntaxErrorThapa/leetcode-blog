@@ -24,9 +24,26 @@ const style = {
   height: 150,
 };
 
-function ModalLogin() {
+function ModalLogin({ isLogged }) {
+  // console.log(isLogged);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    console.log(isLogged);
+    if (isLogged) {
+      try {
+        const response = fetch(`/auth/logout`, {
+          method: "GET",
+          credentials: "include", // Include cookies
+        });
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    } else {
+      setOpen(true);
+    }
+  };
+
   const handleClose = () => setOpen(false);
 
   const onGoogleLogin = () => {
@@ -48,7 +65,7 @@ function ModalLogin() {
         }}
         onClick={handleOpen}
       >
-        Login
+        {isLogged ? "Logout" : "Login"}
       </Button>
       <Modal
         open={open}

@@ -1,8 +1,10 @@
 import React from "react";
 import ModalLogin from "./Login";
-
+import { useAuth } from "./AuthContext";
 
 function Header() {
+  const {isLogged} = useAuth();
+
   return (
     <>
       <nav className="p-4 shadow-lg flex bg-custom-bg items-center">
@@ -17,7 +19,7 @@ function Header() {
 
         {/* Div for Login */}
         <div className="flex-grow flex justify-end">
-          <ModalLogin />
+          <ModalLogin isLogged={isLogged.logStatus}/>
         </div>
       </nav>
     </>

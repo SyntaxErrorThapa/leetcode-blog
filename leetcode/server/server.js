@@ -6,9 +6,19 @@ import passport from "passport";
 import session from "express-session";
 import "dotenv/config";
 import User from "./database/users.js";
+import cors from "cors";
 
 const app = express();
 const port = 5000;
+
+// Config for cors
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow only this origin to access the resources
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Allow cookies to be sent and received
+  })
+);
 
 const users = new User();
 
