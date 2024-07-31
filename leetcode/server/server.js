@@ -51,7 +51,7 @@ passport.use(
       
       // Simulate finding or creating a user in your database
       let user = await users.findUser(profile.id);
-      
+      console.log(user)
       // let user = users.find(u => u.googleId === profile.id);
       if (user.length === 0) {
         await users.addUser(
@@ -70,7 +70,7 @@ passport.use(
 
 // Serialize and deserialize user instances to and from the session
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser((obj, done) => {

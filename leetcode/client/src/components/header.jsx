@@ -3,7 +3,7 @@ import ModalLogin from "./Login";
 import { useAuth } from "./AuthContext";
 
 function Header() {
-  const { isLogged } = useAuth();
+  const { isLogged, setIsLogged } = useAuth();
   console.log(
     `Despacity: ${
       isLogged.user ? isLogged.user.full_name : "No user logged in"
@@ -18,7 +18,7 @@ function Header() {
             <img
               src={`${isLogged.user.user_image}`}
               alt={isLogged.user.full_name}
-              className="w-13 h-13 rounded-full  mr-4"
+              className="w-12 h-12 rounded-full  mr-4 ml-4"
             />
             <div>{isLogged.user.full_name}</div>
           </div>
@@ -34,7 +34,7 @@ function Header() {
 
         {/* Div for Login */}
         <div className="flex-grow flex justify-end">
-          <ModalLogin isLogged={isLogged.logStatus} />
+          <ModalLogin isLogged={isLogged.logStatus} setIsLogged={setIsLogged} />
         </div>
       </nav>
     </>

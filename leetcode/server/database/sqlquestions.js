@@ -26,10 +26,11 @@ class Question {
     explanation,
     picture,
     code,
-    code_link
+    code_link,
+    userId
   ) {
     const query =
-      "INSERT INTO leetcode_questions (number, subheading, category, level, description, explanation, picture, code, code_link) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+      "INSERT INTO leetcode_questions (number, subheading, category, level, description, explanation, picture, code, code_link, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
     try {
       const add_confirm = await this.db.query(query, [
         no,
@@ -41,6 +42,7 @@ class Question {
         picture,
         code,
         code_link,
+        userId
       ]);
       return add_confirm;
     } catch (error) {
@@ -64,10 +66,10 @@ class Question {
   /**
    * Function that gets all the question from the data base
    */
-  async getAllQuestion() {
-    const query = "SELECT * FROM leetcode_questions";
+  async getAllQuestion(userId) {
+    const query = "SELECT * FROM leetcode_questions WHERE user_id = $1";
     try {
-      const returned_questions = await this.db.query(query);
+      const returned_questions = await this.db.query(query, [userId]);
       var questions = {
         easy: [],
         medium: [],

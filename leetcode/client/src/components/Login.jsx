@@ -24,15 +24,16 @@ const style = {
   height: 150,
 };
 
-function ModalLogin({ isLogged }) {
+function ModalLogin({ isLogged, setIsLogged }) {
   // console.log(isLogged);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     console.log(isLogged);
     if (isLogged) {
+      setIsLogged({ logStatus: false, user: null });
       try {
         const response = fetch(`/auth/logout`, {
-          method: "GET",
+          method: "POST",
           credentials: "include", // Include cookies
         });
         window.location.href = "/";

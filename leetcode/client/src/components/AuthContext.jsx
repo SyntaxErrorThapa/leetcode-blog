@@ -19,9 +19,9 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Not authenticated");
       })
       .then((data) => {
-        if (data && data.user && data.user.length > 0) {
+        if (data.isLogged) {
           // Assuming user is an array and we are interested in the first user object
-          setIsLogged({ logStatus: true, user: data.user[0] });
+          setIsLogged({ logStatus: data.isLogged, user: data.user });
         } else {
           setIsLogged({ logStatus: false, user: null });
         }

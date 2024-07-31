@@ -33,7 +33,7 @@ class User {
     try {
       const value = [id];
       const user = await this.db.query(query, value);
-      return user.rows;
+      return user.rows[0];
     } catch (error) {
       throw ("Error at findUser ", error);
     }
