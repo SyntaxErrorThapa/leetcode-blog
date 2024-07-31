@@ -14,15 +14,20 @@ export const AuthProvider = ({ children }) => {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return response.json(); // Parse the response body to JSON
         }
         throw new Error("Not authenticated");
       })
       .then((data) => {
-        setIsLogged({ logStatus: true, user: data.user });
+        if (data && data.user && data.user.length > 0) {
+          // Assuming user is an array and we are interested in the first user object
+          setIsLogged({ logStatus: true, user: data.user[0] });
+        } else {
+          setIsLogged({ logStatus: false, user: null });
+        }
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error fetching authentication status:", error);
         setIsLogged({ logStatus: false, user: null });
       });
   }, []);

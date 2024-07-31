@@ -3,23 +3,38 @@ import ModalLogin from "./Login";
 import { useAuth } from "./AuthContext";
 
 function Header() {
-  const {isLogged} = useAuth();
-
+  const { isLogged } = useAuth();
+  console.log(
+    `Despacity: ${
+      isLogged.user ? isLogged.user.full_name : "No user logged in"
+    }`
+  );
   return (
     <>
       <nav className="p-4 shadow-lg flex bg-custom-bg items-center">
         {/* Nav for the first */}
-        <div className="flex-grow"></div>
+        {isLogged.logStatus && isLogged.user ? (
+          <div className="flex-grow flex items-center text-2xl text-gray-300 font-bold">
+            <img
+              src={`${isLogged.user.user_image}`}
+              alt={isLogged.user.full_name}
+              className="w-13 h-13 rounded-full  mr-4"
+            />
+            <div>{isLogged.user.full_name}</div>
+          </div>
+        ) : (
+          <div className="flex-grow p-4 text-gray-300 italic"></div>
+        )}
 
         {/* Div for Middle Nav*/}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mr-20">
           <h1 className="text-3xl font-bold text-dark-gray">LeetCode Blog</h1>
           <p>Well descripted solution for the problems</p>
         </div>
 
         {/* Div for Login */}
         <div className="flex-grow flex justify-end">
-          <ModalLogin isLogged={isLogged.logStatus}/>
+          <ModalLogin isLogged={isLogged.logStatus} />
         </div>
       </nav>
     </>

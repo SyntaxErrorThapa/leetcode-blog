@@ -29,7 +29,7 @@ router.get(
 
 // Route to check if the user is authenticated
 router.get("/auth/status", isLoggedIn, (req, res) => {
-  console.log("User is authenticated");
+  console.log($`In aith ${req.user}`)
   res.status(200).json({ isLogged: true, user: req.user });
 });
 
