@@ -10,6 +10,8 @@ function HardCards(props) {
             key={value.questionNo}
             number={value.questionNo}
             description={value.subdescription}
+            height={props.height}
+            width={props.width}
             onClick={() =>
               props.openModal(
                 value.explanation,

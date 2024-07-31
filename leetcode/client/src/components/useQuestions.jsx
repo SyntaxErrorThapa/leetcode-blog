@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 
-export const useQuestions = () => {
+export const useQuestions = (logStatus) => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
 
   const fetchQuestions = useCallback(() => {
-    fetch("/question")
+    fetch("/question", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ logStatus }),
+    })
       .then((response) => response.json())
       .then((data) => {
         setProblems({
@@ -14,11 +21,11 @@ export const useQuestions = () => {
         });
       })
       .catch((error) => console.error("Error fetching questions:", error));
-  }, []); // Empty dependency array means this runs once after the initial render
+  }, [logStatus]); 
 
   useEffect(() => {
     fetchQuestions();
   }, [fetchQuestions]);
 
-  return {problems, fetchQuestions};
+  return { problems, fetchQuestions };
 };

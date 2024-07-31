@@ -1,8 +1,9 @@
 import React from "react";
 
-function Card({ number, description, onClick, color }) {
+// Logged In card height = 32, width = 72
+function Card({ number, description, onClick, color, height, width }) {
   return (
-    <div onClick={onClick} className={`h-32 w-72 ${color} shadow-md rounded-lg flex flex-col justify-center items-center m-4`}>
+    <div onClick={onClick} className={`h-${height} w-${width} ${color} shadow-md rounded-lg flex flex-col justify-center items-center m-4`}>
       {/* Problem number */}
       <span className="text-2xl font-extrabold text-white text-center">
         {number}
