@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-export const useQuestions = (logStatus) => {
+export const useQuestions = (logStatus, sort_Question) => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
-
+  console.log(logStatus, sort_Question);
   const fetchQuestions = useCallback(() => {
     fetch("/question", {
       method: "POST",
@@ -10,7 +10,7 @@ export const useQuestions = (logStatus) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ logStatus }),
+      body: JSON.stringify({ logStatus, sort_Question }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -21,7 +21,7 @@ export const useQuestions = (logStatus) => {
         });
       })
       .catch((error) => console.error("Error fetching questions:", error));
-  }, [logStatus]); 
+  }, [logStatus, sort_Question]); 
 
   useEffect(() => {
     fetchQuestions();

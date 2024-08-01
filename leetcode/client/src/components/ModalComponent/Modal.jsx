@@ -34,6 +34,7 @@ function CustomModal({
   handleClose,
   isAdd,
   fetchQuestions,
+  isLogged
 }) {
   console.log(isAdd);
   return (
@@ -79,6 +80,7 @@ function CustomModal({
             <ModalAddQuestion
               onClose={handleClose}
               fetchQuestions={fetchQuestions}
+              isLogged={isLogged}
             />
           </>
         )}

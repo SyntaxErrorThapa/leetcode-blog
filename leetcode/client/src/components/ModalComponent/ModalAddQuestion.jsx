@@ -30,6 +30,7 @@ const categories = [
   { value: 14, label: "Dynamic Programming" },
   { value: 15, label: "Bit Manipulations" },
   { value: 16, label: "Tree" },
+  
 ];
 
 const levels = [
@@ -38,7 +39,7 @@ const levels = [
   { value: 2, label: "Hard" },
 ];
 
-function ModalAddQuestion({ onClose, fetchQuestions }) {
+function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
   const [formdata, setFormdata] = useState({
     number: "",
     subheading: "",
@@ -63,15 +64,15 @@ function ModalAddQuestion({ onClose, fetchQuestions }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    
+
     submitFormData();
-    fetchQuestions();
+    fetchQuestions(isLogged);
   }
 
   async function submitFormData() {
     setLoading(true);
     try {
-      const response = await axios.post("/question", formdata);
+      const response = await axios.post("/question/submit", formdata);
       onClose();
       // Set the form to initial state
       setFormdata({

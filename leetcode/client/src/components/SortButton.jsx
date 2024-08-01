@@ -5,11 +5,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-function SortButton() {
+function SortButton({ triggerSort }) {
   const [sort, setSort] = useState("");
 
   const handleChange = (event) => {
     setSort(event.target.value);
+    triggerSort(event.target.value);
   };
 
   const categories = [
@@ -30,6 +31,7 @@ function SortButton() {
     { value: 14, label: "Dynamic Programming" },
     { value: 15, label: "Bit Manipulations" },
     { value: 16, label: "Tree" },
+    { value: 17, label: "Default" },
   ];
 
   return (
@@ -65,7 +67,10 @@ function SortButton() {
           }}
         >
           {categories.map((category) => (
-            <MenuItem key={category.value} value={category.value}>
+            <MenuItem
+              key={category.value}
+              value={category.value}
+            >
               {category.label}
             </MenuItem>
           ))}

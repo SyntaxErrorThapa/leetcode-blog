@@ -11,8 +11,13 @@ import SortButton from "./SortButton";
 
 function Introduction() {
   const { isLogged, setIsLogged } = useAuth();
-  const { problems, fetchQuestions } = useQuestions(isLogged.logStatus);
+  const [sortQuestion, setSortQuestion] = React.useState(17);
+  const { problems, fetchQuestions } = useQuestions(isLogged.logStatus, sortQuestion); // Initially Default
   const { modalVisible, modalContent, openModal, closeModal } = useModal();
+
+  const triggerSort = (sort_num) => {
+    setSortQuestion(sort_num);
+  };
 
   return (
     <div className=" flex flex-col items-center space-y-8">
@@ -20,7 +25,7 @@ function Introduction() {
         <>
           <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">
             <div className="absolute top-4 right-12">
-              <SortButton />
+              <SortButton triggerSort={triggerSort} />
             </div>
           </div>
         </>
@@ -30,7 +35,7 @@ function Introduction() {
             <h1>Top 100 Leetcode Questions</h1>
           </div>
           <div className="absolute top-4 right-12">
-            <SortButton />
+            <SortButton triggerSort={triggerSort} />
           </div>
         </div>
       )}
@@ -80,6 +85,7 @@ function Introduction() {
           open={openModal}
           isAdd={modalContent.isAdd}
           fetchQuestions={fetchQuestions}
+          isLogged={isLogged.logStatus}
         />
       )}
 
