@@ -7,6 +7,7 @@ import SpeedDialButton from "./SpeedDialButton";
 import { useQuestions } from "./useQuestions";
 import { useModal } from "./useModal";
 import { useAuth } from "./AuthContext";
+import SortButton from "./SortButton";
 
 function Introduction() {
   const { isLogged, setIsLogged } = useAuth();
@@ -14,17 +15,26 @@ function Introduction() {
   const { modalVisible, modalContent, openModal, closeModal } = useModal();
 
   return (
-    <div className="flex flex-col items-center space-y-8">
+    <div className=" flex flex-col items-center space-y-8">
       {isLogged.logStatus ? (
-        <></>
+        <>
+          <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">
+            <div className="absolute top-4 right-12">
+              <SortButton />
+            </div>
+          </div>
+        </>
       ) : (
-        <div className="justify-center items-center font-bold text-center text-4xl pt-5">
-          <h1>Top 100 Leetcode Questions For Interview</h1>
+        <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">
+          <div className="flex-grow">
+            <h1>Top 100 Leetcode Questions</h1>
+          </div>
+          <div className="absolute top-4 right-12">
+            <SortButton />
+          </div>
         </div>
       )}
       <div className="container mx-auto flex flex-row justify-center space-x-8">
-        {/* <CardSection title={"Easy"} questions={problems.easy} Component={EasyCard} openModal={openModal} /> */}
-
         {/* Easy Card Div start */}
         <div className="text-center h-screen overflow-y-auto no-scrollbar">
           <div className="font-bold text-3xl mt-6 mb-4">
@@ -33,8 +43,8 @@ function Introduction() {
           <EasyCard
             easyQuestions={problems.easy}
             openModal={openModal}
-            height={32}
-            width={72}
+            height={100}
+            width={250}
           />
         </div>
         {/* Medium Card Div Start */}
@@ -45,8 +55,8 @@ function Introduction() {
           <MediumCard
             mediumQuestions={problems.medium}
             openModal={openModal}
-            height={32}
-            width={72}
+            height={100}
+            width={250}
           />
         </div>
         {/* Hard Card Div Start */}
@@ -57,8 +67,8 @@ function Introduction() {
           <HardCards
             hardQuestions={problems.hard}
             openModal={openModal}
-            height={32}
-            width={72}
+            height={100}
+            width={250}
           />
         </div>
       </div>
