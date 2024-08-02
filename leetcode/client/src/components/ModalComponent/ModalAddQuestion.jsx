@@ -16,7 +16,21 @@ axios.defaults.withCredentials = true;
 const categories = [
   { value: 0, label: "Arrays & Hashing" },
   { value: 1, label: "Two Pointers" },
-  // other categories...
+  { value: 2, label: "Stack" },
+  { value: 3, label: "Binary Search" },
+  { value: 4, label: "Sliding Window" },
+  { value: 5, label: "Linked List" },
+  { value: 6, label: "Trees" },
+  { value: 7, label: "Tries" },
+  { value: 8, label: "Backtracking" },
+  { value: 9, label: "Heap / Priority Queue" },
+  { value: 10, label: "Intervals" },
+  { value: 11, label: "Greedy" },
+  { value: 12, label: "Advanced Graphs" },
+  { value: 13, label: "Graphs" },
+  { value: 14, label: "Dynamic Programming" },
+  { value: 15, label: "Bit Manipulations" },
+  { value: 16, label: "Tree" },
 ];
 
 const levels = [
@@ -74,6 +88,11 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     formData.append("pdf", formdata.pdf); // Append the PDF file
     formData.append("code", formdata.code);
     formData.append("code_link", formdata.code_link);
+
+    // Log FormData content
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
     try {
       const response = await axios.post(

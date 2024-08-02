@@ -7,6 +7,11 @@ import session from "express-session";
 import "dotenv/config";
 import User from "./database/users.js";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 5000;
@@ -19,6 +24,8 @@ app.use(
     credentials: true, // Allow cookies to be sent and received
   })
 );
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const users = new User();
 
@@ -48,10 +55,9 @@ passport.use(
       callbackURL: "http://localhost:5000/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      
       // Simulate finding or creating a user in your database
       let user = await users.findUser(profile.id);
-      console.log(user)
+      console.log(user);
       // let user = users.find(u => u.googleId === profile.id);
       if (user.length === 0) {
         uesr = await users.addUser(

@@ -7,7 +7,7 @@ import ModalHeader from "./ModalHeader";
 import ModalAddQuestion from "./ModalAddQuestion";
 import ModalAnswer from "./ModalAnswer";
 import ModalQuestionLink from "./ModalQuestionLink";
-
+import ModalPDF from "./ModalPDF";
 
 const style = {
   position: "absolute",
@@ -70,6 +70,9 @@ function CustomModal({
 
             {/* Modal Coding section */}
             <ModalCoding coding={modalContent.coding} />
+
+            {/* Modal Pdf Section */}
+            <ModalPDF pdf={modalContent.picture} />
 
             {/* Modal Question Link */}
             <ModalQuestionLink questionLink={modalContent.code_link} />

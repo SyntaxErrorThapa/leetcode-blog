@@ -41,7 +41,7 @@ const sortedQuestionsBasedOnUserInput = async (questions, category_num) => {
   return sorted_category;
 };
 
-router.post("/question", ensureAuthenticated, async (req, res) => {
+router.post("/question", async (req, res) => {
   try {
     if (req.body.logStatus) {
       const all_questions = await question.getAllQuestion(req.user.id);
@@ -72,42 +72,46 @@ router.post("/question", ensureAuthenticated, async (req, res) => {
 router.post(
   "/question/submit",
   ensureAuthenticated,
-  upload.fields([{ name: "pdf", maxCount: 1 }]),
+  upload.single("pdf"),
   async (req, res) => {
     try {
-      const formdata = req.body;
-      const pictures = req.file;
-      console.log("", req.user);
-      // Log formdata as a readable JSON string
-      console.log("Form Data:", JSON.stringify(formdata, null, 2));
-      console.log("Uploaded File:", pictures);
       const {
+        number,
+        subheading,
+        level,
+        question_description,
+        explanation,
+        code,
+        code_link,
+      } = req.body;
+
+      const {
+        fieldname,
+        originalname,
+        encoding,
+        mimetype,
+        destination,
+        filename,
+        path,
+        size,
+      } = req.file;
+      console.log(req.body)
+
+      const category = JSON.parse(req.body.category);
+      
+      await question.addQuestion(
         number,
         subheading,
         category,
         level,
         question_description,
         explanation,
-        picture,
+        path,
         code,
         code_link,
-      } = req.body;
-      console.log(`Number: ${number}`);
-      // console.log(`Picture path: ${picture.path}`);
+        req.user.id
+      );
 
-      // console.log(number);
-      // await question.addQuestion(
-      //   number,
-      //   subheading,
-      //   category,
-      //   level,
-      //   question_description,
-      //   explanation,
-      //   picture,
-      //   code,
-      //   code_link,
-      //   req.user.id
-      // );
       res.status(201).json({ message: "Question added successfully" });
     } catch (error) {
       console.log(error);
