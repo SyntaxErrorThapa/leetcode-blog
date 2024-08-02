@@ -6,11 +6,10 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Chip,
   Box,
   OutlinedInput,
+  Button,
 } from "@mui/material";
-import Button from "@mui/material/Button";
 
 const categories = [
   { value: 0, label: "Arrays & Hashing" },
@@ -30,7 +29,6 @@ const categories = [
   { value: 14, label: "Dynamic Programming" },
   { value: 15, label: "Bit Manipulations" },
   { value: 16, label: "Tree" },
-  
 ];
 
 const levels = [
@@ -47,7 +45,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     level: "",
     question_description: "",
     explanation: "",
-    picture: "",
+    picture: null,
     code: "",
     code_link: "",
   });
@@ -62,19 +60,45 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     });
   }
 
+  function handleFileChange(event) {
+    setFormdata({
+      ...formdata,
+      picture: event.target.files[0],
+    });
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-
     submitFormData();
     fetchQuestions(isLogged);
   }
 
   async function submitFormData() {
     setLoading(true);
+    const formData = new FormData();
+    formData.append("number", formdata.number);
+    formData.append("subheading", formdata.subheading);
+    formData.append("category", JSON.stringify(formdata.category)); // Convert array to JSON string
+    formData.append("level", formdata.level);
+    formData.append("question_description", formdata.question_description);
+    formData.append("explanation", formdata.explanation);
+    formData.append("picture", formdata.picture); // Append the file
+    formData.append("code", formdata.code);
+    formData.append("code_link", formdata.code_link);
+    
+    for (let[key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
+    console.log(`form data ${JSON.stringify(formdata)}`)
     try {
-      const response = await axios.post("/question/submit", formdata);
+      const response = await axios.post("http://localhost:5000/question/submit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       onClose();
-      // Set the form to initial state
+      // Reset the form to initial state
       setFormdata({
         number: "",
         subheading: "",
@@ -82,7 +106,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
         level: "",
         question_description: "",
         explanation: "",
-        picture: "",
+        picture: null,
         code: "",
         code_link: "",
       });
@@ -155,21 +179,6 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
 
         {/* Row 2 */}
         <div className="flex flex-row space-x-4">
-          {/* <TextField
-            id="category"
-            onChange={handleChange}
-            select
-            label="Category"
-            name="category"
-            value={formdata.category}
-            sx={{ width: "100%" }}
-          >
-            {categories.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField> */}
           <FormControl sx={{ m: 1, width: "100%" }}>
             <InputLabel id="category-label">Category</InputLabel>
             <Select
@@ -236,16 +245,21 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
 
         {/* Row 5 */}
         <div className="flex flex-row space-x-4">
-          <TextField
-            onChange={handleChange}
+          <input
+            type="file"
+            onChange={handleFileChange}
             id="picture"
-            label="Picture if you have"
             name="picture"
-            value={formdata.picture}
-            multiline
-            rows={1}
-            sx={{ width: "100%" }}
+            accept="image/*"
+            style={{ display: 'none' }}
           />
+          <Button
+            variant="contained"
+            onClick={() => document.getElementById('picture').click()}
+          >
+            Upload Image
+          </Button>
+          {formdata.picture && <span>{formdata.picture.name}</span>}
         </div>
 
         {/* Row 6 */}
