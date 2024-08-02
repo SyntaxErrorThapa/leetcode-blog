@@ -54,7 +54,7 @@ passport.use(
       console.log(user)
       // let user = users.find(u => u.googleId === profile.id);
       if (user.length === 0) {
-        await users.addUser(
+        uesr = await users.addUser(
           profile.displayName,
           profile.emails[0].value,
           profile.name.givenName,

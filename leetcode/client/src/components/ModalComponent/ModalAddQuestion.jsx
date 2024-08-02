@@ -11,24 +11,12 @@ import {
   Button,
 } from "@mui/material";
 
+axios.defaults.withCredentials = true;
+
 const categories = [
   { value: 0, label: "Arrays & Hashing" },
   { value: 1, label: "Two Pointers" },
-  { value: 2, label: "Stack" },
-  { value: 3, label: "Binary Search" },
-  { value: 4, label: "Sliding Window" },
-  { value: 5, label: "Linked List" },
-  { value: 6, label: "Trees" },
-  { value: 7, label: "Tries" },
-  { value: 8, label: "Backtracking" },
-  { value: 9, label: "Heap / Priority Queue" },
-  { value: 10, label: "Intervals" },
-  { value: 11, label: "Greedy" },
-  { value: 12, label: "Advanced Graphs" },
-  { value: 13, label: "Graphs" },
-  { value: 14, label: "Dynamic Programming" },
-  { value: 15, label: "Bit Manipulations" },
-  { value: 16, label: "Tree" },
+  // other categories...
 ];
 
 const levels = [
@@ -45,7 +33,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     level: "",
     question_description: "",
     explanation: "",
-    picture: null,
+    pdf: null,
     code: "",
     code_link: "",
   });
@@ -61,9 +49,10 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
   }
 
   function handleFileChange(event) {
+    const { name, files } = event.target;
     setFormdata({
       ...formdata,
-      picture: event.target.files[0],
+      [name]: files[0],
     });
   }
 
@@ -82,21 +71,20 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     formData.append("level", formdata.level);
     formData.append("question_description", formdata.question_description);
     formData.append("explanation", formdata.explanation);
-    formData.append("picture", formdata.picture); // Append the file
+    formData.append("pdf", formdata.pdf); // Append the PDF file
     formData.append("code", formdata.code);
     formData.append("code_link", formdata.code_link);
-    
-    for (let[key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
 
-    console.log(`form data ${JSON.stringify(formdata)}`)
     try {
-      const response = await axios.post("http://localhost:5000/question/submit", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/question/submit",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       onClose();
       // Reset the form to initial state
       setFormdata({
@@ -106,7 +94,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
         level: "",
         question_description: "",
         explanation: "",
-        picture: null,
+        pdf: null,
         code: "",
         code_link: "",
       });
@@ -248,18 +236,18 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
           <input
             type="file"
             onChange={handleFileChange}
-            id="picture"
-            name="picture"
-            accept="image/*"
-            style={{ display: 'none' }}
+            id="pdf"
+            name="pdf"
+            accept="application/pdf"
+            style={{ display: "none" }}
           />
           <Button
             variant="contained"
-            onClick={() => document.getElementById('picture').click()}
+            onClick={() => document.getElementById("pdf").click()}
           >
-            Upload Image
+            Upload PDF
           </Button>
-          {formdata.picture && <span>{formdata.picture.name}</span>}
+          {formdata.pdf && <span>{formdata.pdf.name}</span>}
         </div>
 
         {/* Row 6 */}

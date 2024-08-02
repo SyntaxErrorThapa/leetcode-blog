@@ -5,17 +5,25 @@ import multer from "multer";
 const question = new Question();
 const router = Router();
 
+const ensureAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
 // Configuring multer for file upload
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
+    cb(null, req.user.email + "-" + req.body.number + ".pdf");
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage, limits: { fileSize: 1000000 } }); // 1MB limit
 
 const sortedQuestionsBasedOnUserInput = async (questions, category_num) => {
   var sorted_category = {
@@ -33,7 +41,7 @@ const sortedQuestionsBasedOnUserInput = async (questions, category_num) => {
   return sorted_category;
 };
 
-router.post("/question", async (req, res) => {
+router.post("/question", ensureAuthenticated, async (req, res) => {
   try {
     if (req.body.logStatus) {
       const all_questions = await question.getAllQuestion(req.user.id);
@@ -61,46 +69,51 @@ router.post("/question", async (req, res) => {
   }
 });
 
-router.post("/question/submit", upload.single("picture"), async (req, res) => {
-  try {
-    const formdata = req.body;
-    const pictures = req.file;
+router.post(
+  "/question/submit",
+  ensureAuthenticated,
+  upload.fields([{ name: "pdf", maxCount: 1 }]),
+  async (req, res) => {
+    try {
+      const formdata = req.body;
+      const pictures = req.file;
+      console.log("", req.user);
+      // Log formdata as a readable JSON string
+      console.log("Form Data:", JSON.stringify(formdata, null, 2));
+      console.log("Uploaded File:", pictures);
+      const {
+        number,
+        subheading,
+        category,
+        level,
+        question_description,
+        explanation,
+        picture,
+        code,
+        code_link,
+      } = req.body;
+      console.log(`Number: ${number}`);
+      // console.log(`Picture path: ${picture.path}`);
 
-    // Log formdata as a readable JSON string
-    console.log("Form Data:", JSON.stringify(formdata, null, 2));
-    console.log("Uploaded File:", pictures);
-    const {
-      number,
-      subheading,
-      category,
-      level,
-      question_description,
-      explanation,
-      picture,
-      code,
-      code_link,
-    } = req.body;
-    console.log(`Number: ${number}`);
-    // console.log(`Picture path: ${picture.path}`);
-
-    // console.log(number);
-    // await question.addQuestion(
-    //   number,
-    //   subheading,
-    //   category,
-    //   level,
-    //   question_description,
-    //   explanation,
-    //   picture,
-    //   code,
-    //   code_link,
-    //   req.user.id
-    // );
-    res.status(201).json({ message: "Question added successfully" });
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: error });
+      // console.log(number);
+      // await question.addQuestion(
+      //   number,
+      //   subheading,
+      //   category,
+      //   level,
+      //   question_description,
+      //   explanation,
+      //   picture,
+      //   code,
+      //   code_link,
+      //   req.user.id
+      // );
+      res.status(201).json({ message: "Question added successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: error });
+    }
   }
-});
+);
 
 export default router;

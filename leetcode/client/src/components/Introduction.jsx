@@ -12,7 +12,10 @@ import SortButton from "./SortButton";
 function Introduction() {
   const { isLogged, setIsLogged } = useAuth();
   const [sortQuestion, setSortQuestion] = React.useState(17);
-  const { problems, fetchQuestions } = useQuestions(isLogged.logStatus, sortQuestion); // Initially Default
+  const { problems, fetchQuestions } = useQuestions(
+    isLogged.logStatus,
+    sortQuestion
+  ); // Initially Default
   const { modalVisible, modalContent, openModal, closeModal } = useModal();
 
   const triggerSort = (sort_num) => {
@@ -20,7 +23,7 @@ function Introduction() {
   };
 
   return (
-    <div className=" flex flex-col items-center space-y-8">
+    <div className="flex flex-col items-center space-y-8">
       {isLogged.logStatus ? (
         <>
           <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">

@@ -5,7 +5,11 @@ const router = Router();
 
 // Middle ware to check if the user is authenticated
 const isLoggedIn = (req, res, next) => {
-  req.user ? next() : res.sendStatus(401);
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
 };
 
 // Route for Google authentication and login
