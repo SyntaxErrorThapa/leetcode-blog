@@ -48,7 +48,7 @@ function Card({
         {/* Front of the card */}
         <div className="card-front flex flex-col justify-center items-center">
           {/* Problem number */}
-          <span className="text-2xl font-extrabold text-white text-center">
+          <span className="text-xl font-extrabold text-white text-center">
             {number}
           </span>
           <span className="text-md font-semibold text-white px-4 text-center">

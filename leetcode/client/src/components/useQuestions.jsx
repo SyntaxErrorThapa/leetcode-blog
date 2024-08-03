@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 
 export const useQuestions = (logStatus, sort_Question) => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
-  console.log(logStatus, sort_Question);
   const fetchQuestions = useCallback(() => {
     fetch("/question", {
       method: "POST",

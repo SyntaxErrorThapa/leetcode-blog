@@ -34,7 +34,7 @@ function CustomModal({
   handleClose,
   isAdd,
   fetchQuestions,
-  isLogged
+  isLogged,
 }) {
   console.log(isAdd);
   return (
@@ -51,9 +51,17 @@ function CustomModal({
             justifyContent: "space-between",
             alignItems: "center",
           }}
-        >ncsu
+        >
+          
           {/* Modal Heading */}
-          {!isAdd ? <ModalHeader number={modalContent.questionNo} heading={modalContent.subdescription} /> : <ModalHeader heading="New Question Form" />}
+          {!isAdd ? (
+            <ModalHeader
+              number={modalContent.questionNo}
+              heading={modalContent.subdescription}
+            />
+          ) : (
+            <ModalHeader heading="New Question Form" />
+          )}
           <IconButton onClick={handleClose} sx={{ color: "#fff" }}>
             <CloseIcon />
           </IconButton>
@@ -64,15 +72,15 @@ function CustomModal({
           <>
             {/* Modal Question Description section */}
             <ModalExplanation explanation={modalContent.description} />
-            
+
             {/* Modal Explanation */}
             <ModalAnswer answer={modalContent.explanation} />
 
-            {/* Modal Coding section */}
-            <ModalCoding coding={modalContent.coding} />
-
             {/* Modal Pdf Section */}
             <ModalPDF pdf={modalContent.picture} />
+
+            {/* Modal Coding section */}
+            <ModalCoding coding={modalContent.coding} />
 
             {/* Modal Question Link */}
             <ModalQuestionLink questionLink={modalContent.code_link} />

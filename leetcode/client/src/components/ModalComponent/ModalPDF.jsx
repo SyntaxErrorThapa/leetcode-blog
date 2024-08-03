@@ -21,12 +21,12 @@ function ModalPDF({ pdf }) {
 
   return (
     
-    <div className="pdf-container no-scrollbar" style={containerStyle}>
+    <div className="pdf-container no-scrollbar mt-4" style={containerStyle}>
       <Document
         file={pdfUrl}
         onLoadSuccess={onDocumentLoadSuccess}
       >
-        <Page pageNumber={pageNumber} width={1200} height={1000}/>
+        <Page pageNumber={pageNumber} width={1100} height={1000}/>
       </Document>
       <div className="navigation" style={navigationStyle}>
         <button

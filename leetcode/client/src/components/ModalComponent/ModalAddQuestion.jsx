@@ -73,7 +73,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
   function handleSubmit(event) {
     event.preventDefault();
     submitFormData();
-    fetchQuestions(isLogged);
+    
   }
 
   async function submitFormData() {
@@ -89,11 +89,6 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     formData.append("code", formdata.code);
     formData.append("code_link", formdata.code_link);
 
-    // Log FormData content
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
       const response = await axios.post(
         "http://localhost:5000/question/submit",
@@ -104,6 +99,9 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
           },
         }
       );
+
+      // Fetch again from the database 
+      await fetchQuestions();
       onClose();
       // Reset the form to initial state
       setFormdata({
@@ -119,7 +117,6 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
       });
     } catch (error) {
       alert(error);
-      // Handle error here, e.g., show a notification or alert to the user
     } finally {
       setLoading(false);
     }
