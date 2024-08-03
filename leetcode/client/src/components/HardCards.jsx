@@ -10,6 +10,7 @@ function HardCards(props) {
             key={value.questionNo}
             number={value.questionNo}
             description={value.subdescription}
+            category={value.category}
             height={props.height}
             width={props.width}
             onClick={() =>
