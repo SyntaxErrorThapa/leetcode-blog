@@ -36,7 +36,7 @@ function ModalLogin({ isLogged, setIsLogged }) {
           method: "POST",
           credentials: "include", // Include cookies
         });
-        window.location.href = "/";
+        // window.location.href = "/";
       } catch (error) {
         console.error("Error:", error);
       }

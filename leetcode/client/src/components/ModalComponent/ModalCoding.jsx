@@ -4,7 +4,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const customStyle = {
-  borderRadius: '20px',
+  borderRadius: '10px',
 }
 function ModalCoding({ coding }) {
   return (
