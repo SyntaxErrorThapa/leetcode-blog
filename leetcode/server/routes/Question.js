@@ -130,7 +130,7 @@ router.post(
 
       res.status(201).json({ message: "Question added successfully" });
     } catch (error) {
-      console.log(error);
+      console.log(`Error at route question/submit ${error}`);
       res.status(500).json({ error: error });
     }
   }
