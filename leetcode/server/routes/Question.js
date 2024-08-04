@@ -49,7 +49,7 @@ router.post("/question", async (req, res) => {
         all_questions,
         req.body.sort_Question
       );
-
+      console.log(all_questions);
       req.body.sort_Question === 17
         ? res.json({ questions: all_questions })
         : res.json({ questions: sorted_questions });
@@ -66,6 +66,22 @@ router.post("/question", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: `Error at route /question ${error}` });
+  }
+});
+
+router.get("/question/:id", ensureAuthenticated, async (req, res) => {
+  try {
+    const questionData = await question.getQuestionByNumber(
+      req.params.id,
+      req.user.id
+    );
+    if (!questionData) {
+      return res.status(401).json({ message: "Question not found" });
+    }
+    res.status(200).json(questionData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
   }
 });
 
@@ -95,10 +111,10 @@ router.post(
         path,
         size,
       } = req.file;
-      console.log(req.body)
+      console.log(req.body);
 
       const category = JSON.parse(req.body.category);
-      
+
       await question.addQuestion(
         number,
         subheading,
@@ -111,7 +127,7 @@ router.post(
         code_link,
         req.user.id
       );
-      
+
       res.status(201).json({ message: "Question added successfully" });
     } catch (error) {
       console.log(error);

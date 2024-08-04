@@ -91,6 +91,19 @@ class Question {
       throw ("Error at getallquestions", error);
     }
   }
+
+  async getQuestionByNumber(questionNo, userid) {
+    try {
+      const query = "SELECT * FROM leetcode_questions where number = $1 AND user_id = $2";
+      const result = await this.db.query(query, [questionNo, userid])
+      if (result) {
+        result.category = JSON.parse(result.category); // Parse the category field
+      }
+      return result
+    }catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default Question;

@@ -46,7 +46,7 @@ function Card({
         style={{ height: `${height}px`, width: `${width}px` }}
       >
         {/* Front of the card */}
-        <div className="card-front flex flex-col justify-center items-center">
+        <div className="card-front card-content flex flex-col justify-center items-center">
           {/* Problem number */}
           <span className="text-xl font-extrabold text-white text-center">
             {number}
@@ -56,7 +56,7 @@ function Card({
           </span>
         </div>
         {/* Back of the card */}
-        <div className="card-back flex flex-col justify-center items-center">
+        <div className="card-back card-content flex flex-col justify-center items-center">
           {matchedCategories.length > 0 ? (
             matchedCategories.map((cat, index) => (
               <span
@@ -68,7 +68,7 @@ function Card({
             ))
           ) : (
             <span className="text-l font-extrabold text-white text-center">
-              No Matching Categories
+              No Matching Categories  
             </span>
           )}
         </div>

@@ -8,6 +8,7 @@ import ModalAddQuestion from "./ModalAddQuestion";
 import ModalAnswer from "./ModalAnswer";
 import ModalQuestionLink from "./ModalQuestionLink";
 import ModalPDF from "./ModalPDF";
+import DefaultButton from "../Button/DefaultButton.jsx";
 
 const style = {
   position: "absolute",
@@ -36,7 +37,12 @@ function CustomModal({
   fetchQuestions,
   isLogged,
 }) {
-  console.log(isAdd);
+  
+  const handleCloseButton = () => {
+    handleClose();
+    
+  }
+
   return (
     <Modal
       open={open}
@@ -52,7 +58,6 @@ function CustomModal({
             alignItems: "center",
           }}
         >
-          
           {/* Modal Heading */}
           {!isAdd ? (
             <ModalHeader
@@ -82,8 +87,13 @@ function CustomModal({
             {/* Modal Coding section */}
             <ModalCoding coding={modalContent.coding} />
 
-            {/* Modal Question Link */}
-            <ModalQuestionLink questionLink={modalContent.code_link} />
+            <div className="flex flex-row text-center items-center justify-between">
+              {/* Modal Question Link */}
+              <ModalQuestionLink questionLink={modalContent.code_link} />
+
+              {/* Logged User allowed to edit */}
+              {isLogged ? (<DefaultButton text="Edit" sx={{width: "100px", height: "50px"}} handleOpen={handleCloseButton}/>) : (<></>)}
+            </div>
           </>
         ) : (
           <>
@@ -92,6 +102,7 @@ function CustomModal({
               onClose={handleClose}
               fetchQuestions={fetchQuestions}
               isLogged={isLogged}
+              questionId={modalContent.questionNo}
             />
           </>
         )}

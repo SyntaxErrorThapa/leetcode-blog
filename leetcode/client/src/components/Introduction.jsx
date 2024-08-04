@@ -1,13 +1,13 @@
 import React from "react";
-import EasyCard from "./EasyCards";
-import MediumCard from "./MediumCards";
-import HardCards from "./HardCards";
+import EasyCard from "./Card/EasyCards";
+import MediumCard from "./Card/MediumCards";
+import HardCards from "./Card/HardCards";
 import Modal from "./ModalComponent/Modal";
-import SpeedDialButton from "./SpeedDialButton";
+import SpeedDialButton from "./Button/SpeedDialButton";
 import { useQuestions } from "./useQuestions";
 import { useModal } from "./useModal";
 import { useAuth } from "./AuthContext";
-import SortButton from "./SortButton";
+import SortButton from "./Button/SortButton";
 
 function Introduction() {
   const { isLogged, setIsLogged } = useAuth();

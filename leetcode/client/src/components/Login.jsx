@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import axios from "axios";
+import DefaultButton from "./Button/DefaultButton.jsx";
 
 const webURL = "http://localhost:5000";
 
@@ -54,20 +53,8 @@ function ModalLogin({ isLogged, setIsLogged }) {
 
   return (
     <>
-      <Button
-        variant="outlined"
-        sx={{
-          color: "white",
-          borderColor: "white",
-          "&:hover": {
-            color: "white",
-            borderColor: "rgb(255, 255, 255, 0.1)",
-          },
-        }}
-        onClick={handleOpen}
-      >
-        {isLogged ? "Logout" : "Login"}
-      </Button>
+      {isLogged ? <DefaultButton handleOpen={handleOpen} text="Logout"/> : <DefaultButton handleOpen={handleOpen} text="Login"/>}
+      
       <Modal
         open={open}
         onClose={handleClose}

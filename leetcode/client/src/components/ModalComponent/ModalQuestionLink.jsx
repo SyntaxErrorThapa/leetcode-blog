@@ -12,7 +12,7 @@ const styles = {
     color: "#3f51b5",
     textDecoration: "none",
     fontWeight: "bold",
-    fontSize: "16px",
+    fontSize: "17px", 
   },
 };
 
