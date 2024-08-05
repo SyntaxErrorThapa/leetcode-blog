@@ -9,6 +9,8 @@ import ModalAnswer from "./ModalAnswer";
 import ModalQuestionLink from "./ModalQuestionLink";
 import ModalPDF from "./ModalPDF";
 import DefaultButton from "../Button/DefaultButton.jsx";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const style = {
   position: "absolute",
@@ -37,11 +39,35 @@ function CustomModal({
   fetchQuestions,
   isLogged,
 }) {
-  
-  const handleCloseButton = () => {
+  const handleCloseButton = async () => {
     handleClose();
-    
-  }
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `/question/delete/${modalContent.questionNo}`,
+      });
+      if (response.status == 200) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      alert("Error at delete", error);
+    }
+    fetchQuestions();
+  };
 
   return (
     <Modal
@@ -92,7 +118,15 @@ function CustomModal({
               <ModalQuestionLink questionLink={modalContent.code_link} />
 
               {/* Logged User allowed to edit */}
-              {isLogged ? (<DefaultButton text="Edit" sx={{width: "100px", height: "50px"}} handleOpen={handleCloseButton}/>) : (<></>)}
+              {isLogged ? (
+                <DefaultButton
+                  text="Delete"
+                  sx={{ width: "100px", height: "50px" }}
+                  handleOpen={handleCloseButton}
+                />
+              ) : (
+                <></>
+              )}
             </div>
           </>
         ) : (

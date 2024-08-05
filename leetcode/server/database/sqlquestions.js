@@ -42,7 +42,7 @@ class Question {
         picture,
         code,
         code_link,
-        userId
+        userId,
       ]);
       return add_confirm;
     } catch (error) {
@@ -92,15 +92,27 @@ class Question {
     }
   }
 
+  async deleteQuestionByQuestionNoAndUserID(questionNo, userId) {
+    try {
+      const query =
+        "DELETE FROM leetcode_questions WHERE number = $1 AND user_id = $2";
+      const response = await this.db.query(query, [questionNo, userId]);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getQuestionByNumber(questionNo, userid) {
     try {
-      const query = "SELECT * FROM leetcode_questions where number = $1 AND user_id = $2";
-      const result = await this.db.query(query, [questionNo, userid])
+      const query =
+        "SELECT * FROM leetcode_questions where number = $1 AND user_id = $2";
+      const result = await this.db.query(query, [questionNo, userid]);
       if (result) {
         result.category = JSON.parse(result.category); // Parse the category field
       }
-      return result
-    }catch (error) {
+      return result;
+    } catch (error) {
       throw error;
     }
   }

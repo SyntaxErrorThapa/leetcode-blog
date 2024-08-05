@@ -69,19 +69,17 @@ router.post("/question", async (req, res) => {
   }
 });
 
-router.get("/question/:id", ensureAuthenticated, async (req, res) => {
+router.delete("/question/delete/:questionNo", async (req, res) => {
+  const questionNo = req.params.questionNo;
   try {
-    const questionData = await question.getQuestionByNumber(
-      req.params.id,
+    const response = await question.deleteQuestionByQuestionNoAndUserID(
+      questionNo,
       req.user.id
     );
-    if (!questionData) {
-      return res.status(401).json({ message: "Question not found" });
-    }
-    res.status(200).json(questionData);
+    console.log(response);
+    res.status(200).json({ message: "Delete Successful!" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error });
+    res.status(500).json({ message: "Error deleting from database" });
   }
 });
 
@@ -128,7 +126,7 @@ router.post(
         req.user.id
       );
 
-      res.status(201).json({ message: "Question added successfully" });
+      res.status(200).json({ message: "Question added successfully!!" });
     } catch (error) {
       console.log(`Error at route question/submit ${error}`);
       res.status(500).json({ error: error });

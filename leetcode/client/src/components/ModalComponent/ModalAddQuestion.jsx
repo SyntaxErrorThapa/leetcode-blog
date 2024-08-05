@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
+
 import {
   TextField,
   MenuItem,
@@ -98,7 +100,24 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
           },
         }
       );
-
+      
+      if (response.status == 200) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: response.data.message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
       // Fetch again from the database
       await fetchQuestions();
       onClose();
