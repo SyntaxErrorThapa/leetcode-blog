@@ -24,10 +24,8 @@ const style = {
 };
 
 function ModalLogin({ isLogged, setIsLogged }) {
-  // console.log(isLogged);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-    console.log(isLogged);
     if (isLogged) {
       setIsLogged({ logStatus: false, user: null });
       try {
@@ -47,7 +45,6 @@ function ModalLogin({ isLogged, setIsLogged }) {
   const handleClose = () => setOpen(false);
 
   const onGoogleLogin = () => {
-    console.log("Google Login");
     window.location.href = `${webURL}/auth/google`;
   };
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import {
   TextField,
@@ -100,14 +100,14 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
           },
         }
       );
-      
+
       if (response.status == 200) {
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: response.data.message,
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       } else {
         Swal.fire({
@@ -115,7 +115,7 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
           icon: "error",
           title: response.data.message,
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
       }
       // Fetch again from the database
@@ -134,7 +134,14 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
         code_link: "",
       });
     } catch (error) {
-      alert(error);
+      onClose();
+      Swal.fire({
+        title: `Error`,
+        text: `Make sure all the fields are filled. i.e. 
+        Number, Sub-Heading, Category, Level, Question Description, Explanation, Code. 
+        Your PDF upload file and Leetcode link are optional`,
+        icon: "question",
+      });
     } finally {
       setLoading(false);
     }

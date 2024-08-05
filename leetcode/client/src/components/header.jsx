@@ -4,11 +4,7 @@ import { useAuth } from "./AuthContext";
 
 function Header() {
   const { isLogged, setIsLogged } = useAuth();
-  console.log(
-    `Despacity: ${
-      isLogged.user ? isLogged.user.full_name : "No user logged in"
-    }`
-  );
+
   return (
     <>
       <nav className="p-4 shadow-lg flex bg-custom-bg items-center">

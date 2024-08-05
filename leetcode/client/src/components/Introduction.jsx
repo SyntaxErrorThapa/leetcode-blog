@@ -23,7 +23,7 @@ function Introduction() {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-8">
+    <div className="flex relative flex-col items-center space-y-8">
       {isLogged.logStatus ? (
         <>
           <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">
@@ -33,12 +33,17 @@ function Introduction() {
           </div>
         </>
       ) : (
-        <div className="relative flex flex-row font-bold justify-center text-center text-4xl pt-5 w-full">
-          <div className="flex-grow">
-            <h1>Top 100 Leetcode Questions</h1>
+        <div className="relative flex flex-col font-bold justify-center text-center text-4xl pt-5 w-full">
+          <div className="flex flex-row">
+            <div className="flex-grow">
+              <h1>Top 100 Leetcode Questions</h1>
+            </div>
+            <div className="absolute top-4 right-12">
+              <SortButton triggerSort={triggerSort} />
+            </div>
           </div>
-          <div className="absolute top-4 right-12">
-            <SortButton triggerSort={triggerSort} />
+          <div className="mt-5">
+            <h1>"Join Now and Save Your LeetCode Solutions"</h1>
           </div>
         </div>
       )}

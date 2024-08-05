@@ -49,7 +49,7 @@ router.post("/question", async (req, res) => {
         all_questions,
         req.body.sort_Question
       );
-      console.log(all_questions);
+      
       req.body.sort_Question === 17
         ? res.json({ questions: all_questions })
         : res.json({ questions: sorted_questions });
@@ -64,7 +64,7 @@ router.post("/question", async (req, res) => {
         : res.json({ questions: sorted_questions });
     }
   } catch (error) {
-    console.log(error);
+
     res.status(500).json({ error: `Error at route /question ${error}` });
   }
 });
@@ -76,7 +76,7 @@ router.delete("/question/delete/:questionNo", async (req, res) => {
       questionNo,
       req.user.id
     );
-    console.log(response);
+
     res.status(200).json({ message: "Delete Successful!" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting from database" });
@@ -98,19 +98,7 @@ router.post(
         code,
         code_link,
       } = req.body;
-
-      const {
-        fieldname,
-        originalname,
-        encoding,
-        mimetype,
-        destination,
-        filename,
-        path,
-        size,
-      } = req.file;
       console.log(req.body);
-
       const category = JSON.parse(req.body.category);
 
       await question.addQuestion(
@@ -120,7 +108,7 @@ router.post(
         level,
         question_description,
         explanation,
-        path,
+        req.file ? req.file.path : "",
         code,
         code_link,
         req.user.id
@@ -128,8 +116,11 @@ router.post(
 
       res.status(200).json({ message: "Question added successfully!!" });
     } catch (error) {
-      console.log(`Error at route question/submit ${error}`);
-      res.status(500).json({ error: error });
+      res.status(500).json({
+        message: `Make sure you all the fields are filled. i.e. 
+            Number, Sub-Heading, Category, Level, Question Description, Explanation, Code. 
+            Your PDF upload file and leetcode link are optional`,
+      });
     }
   }
 );

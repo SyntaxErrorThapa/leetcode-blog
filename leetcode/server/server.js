@@ -55,21 +55,23 @@ passport.use(
       callbackURL: "http://localhost:5000/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
-      // Simulate finding or creating a user in your database
-      let user = await users.findUser(profile.id);
-      console.log(user);
-      // let user = users.find(u => u.googleId === profile.id);
-      if (user.length === 0) {
-        uesr = await users.addUser(
-          profile.displayName,
-          profile.emails[0].value,
-          profile.name.givenName,
-          profile.name.familyName,
-          profile.photos[0].value,
-          profile.id
-        );
+      try {
+        let user = await users.findUser(profile.id);
+        // let user = users.find(u => u.googleId === profile.id);
+        if (!user) {
+          user = await users.addUser(
+            profile.displayName,
+            profile.emails[0].value,
+            profile.name.givenName,
+            profile.name.familyName,
+            profile.photos[0].value,
+            profile.id
+          );
+        }
+        return done(null, user);
+      } catch (error) {
+        console.log("Error at google strategy", error);
       }
-      return done(null, user);
     }
   )
 );

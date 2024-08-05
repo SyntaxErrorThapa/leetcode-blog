@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'custom-bg-image': "url('/leetcode_background.gif')"
+      },
       colors: {
         'custom-bg': '#1A202C',  // Dark background color
         'custom-text': '#FFFFFF', // White text color for high contrast

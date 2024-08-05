@@ -91,7 +91,7 @@ function CustomModal({
               heading={modalContent.subdescription}
             />
           ) : (
-            <ModalHeader heading="New Question Form" />
+            <ModalHeader heading="Question Form" />
           )}
           <IconButton onClick={handleClose} sx={{ color: "#fff" }}>
             <CloseIcon />

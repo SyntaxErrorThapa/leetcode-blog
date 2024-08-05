@@ -4,9 +4,10 @@ function ModalExplanation({ explanation }) {
   return (
     <>
       <div className="flex flex-col m-1 p-3 border-2 rounded-lg">
-        <p className="font-bold">
+        <p className="text-xl font-extrabold">
           Question Description: 
         </p>
+        <br></br>
         <p className="whitespace-pre-wrap">{explanation}</p>
         </div>
     </>
