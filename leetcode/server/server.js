@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 5000;
+const port = 7000;
 
 // Config for cors
 app.use(
@@ -52,7 +52,7 @@ passport.use(
     {
       clientID: process.env.AUTHCLIENTID,
       clientSecret: process.env.AUTHCLIENTSECRET,
-      callbackURL: "http://localhost:5000/google/callback",
+      callbackURL: "http://localhost:7000/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

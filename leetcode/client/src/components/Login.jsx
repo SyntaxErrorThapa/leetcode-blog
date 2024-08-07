@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import DefaultButton from "./Button/DefaultButton.jsx";
 
-const webURL = "http://localhost:5000";
+const webURL = "http://localhost:7000";
 
 const style = {
   display: "flex",
@@ -46,12 +46,19 @@ function ModalLogin({ isLogged, setIsLogged }) {
 
   const onGoogleLogin = () => {
     window.location.href = `${webURL}/auth/google`;
+    // const response = fetch("/auth/google", {
+    //   method: "POST",
+    // });
   };
 
   return (
     <>
-      {isLogged ? <DefaultButton handleOpen={handleOpen} text="Logout"/> : <DefaultButton handleOpen={handleOpen} text="Login"/>}
-      
+      {isLogged ? (
+        <DefaultButton handleOpen={handleOpen} text="Logout" />
+      ) : (
+        <DefaultButton handleOpen={handleOpen} text="Login" />
+      )}
+
       <Modal
         open={open}
         onClose={handleClose}
