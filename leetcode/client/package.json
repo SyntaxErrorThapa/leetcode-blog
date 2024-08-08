@@ -1,7 +1,7 @@
 {
   "name": "leetcode",
   "version": "0.1.0",
-  "proxy": "http://localhost:7000",
+  "proxy": "https://server.leetcodejournal.com",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -9,8 +9,6 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.4",
     "axios": "^1.7.2",
-    "express": "^4.19.2",
-    "formik": "^2.4.6",
     "pdfjs-dist": "3.11.174",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -46,9 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "node-sass": "^7.0.3",
-    "nodemon": "^3.1.4"
   }
 }

@@ -41,6 +41,8 @@ const levels = [
   { value: 2, label: "Hard" },
 ];
 
+const apiURL = "https://server.leetcodejournal.com";
+
 function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
   const [formdata, setFormdata] = useState({
     number: "",
@@ -91,15 +93,11 @@ function ModalAddQuestion({ onClose, fetchQuestions, isLogged }) {
     formData.append("code_link", formdata.code_link);
 
     try {
-      const response = await axios.post(
-        "/question/submit",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${apiURL}/question/submit`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status == 200) {
         Swal.fire({

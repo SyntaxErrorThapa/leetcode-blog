@@ -1,26 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 
 export const useQuestions = (logStatus, sort_Question) => {
   const [problems, setProblems] = useState({ easy: [], medium: [], hard: [] });
+  const apiUrl = "https://server.leetcodejournal.com";
+
   const fetchQuestions = useCallback(() => {
-    fetch("/question", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ logStatus, sort_Question }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    axios.post(`${apiUrl}/question`, { logStatus, sort_Question }, { withCredentials: true })
+      .then((response) => {
         setProblems({
-          easy: data.questions.easy,
-          medium: data.questions.medium,
-          hard: data.questions.hard,
+          easy: response.data.questions.easy,
+          medium: response.data.questions.medium,
+          hard: response.data.questions.hard,
         });
       })
       .catch((error) => console.error("Error fetching questions:", error));
-  }, [logStatus, sort_Question]); 
+  }, [logStatus, sort_Question, apiUrl]);
 
   useEffect(() => {
     fetchQuestions();

@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import DefaultButton from "./Button/DefaultButton.jsx";
+import axios from "axios";
 
-const webURL = "http://localhost:7000";
+const webURL = "https://server.leetcodejournal.com";
 
 const style = {
   display: "flex",
@@ -25,14 +25,12 @@ const style = {
 
 function ModalLogin({ isLogged, setIsLogged }) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {
+
+  const handleOpen = async () => {
     if (isLogged) {
       setIsLogged({ logStatus: false, user: null });
       try {
-        const response = fetch(`/auth/logout`, {
-          method: "POST",
-          credentials: "include", // Include cookies
-        });
+        await axios.post(`${webURL}/auth/logout`, {}, { withCredentials: true });
         // window.location.href = "/";
       } catch (error) {
         console.error("Error:", error);
@@ -46,9 +44,6 @@ function ModalLogin({ isLogged, setIsLogged }) {
 
   const onGoogleLogin = () => {
     window.location.href = `${webURL}/auth/google`;
-    // const response = fetch("/auth/google", {
-    //   method: "POST",
-    // });
   };
 
   return (
@@ -77,7 +72,8 @@ function ModalLogin({ isLogged, setIsLogged }) {
               width="24"
               id="provider-logo-dark"
               src="https://authjs.dev/img/providers/google.svg"
-            ></img>
+              alt="Google logo"
+            />
             <p className="text-white font-bold">Sign in with Google</p>
           </div>
         </Box>

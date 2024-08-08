@@ -1,4 +1,5 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -8,22 +9,21 @@ export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState({ logStatus: false, user: null });
 
   useEffect(() => {
-    fetch("/auth/status", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json(); // Parse the response body to JSON
-        }
-        throw new Error("Not authenticated");
+    const apiUrl = "https://server.leetcodejournal.com";
+    axios
+      .get(`${apiUrl}/auth/status`, {
+        withCredentials: true,
       })
-      .then((data) => {
-        if (data.isLogged) {
-          // Assuming user is an array and we are interested in the first user object
-          setIsLogged({ logStatus: data.isLogged, user: data.user });
+      .then((response) => {
+        if (response.status === 200) {
+          const data = response.data;
+          if (data.isLogged) {
+            setIsLogged({ logStatus: data.isLogged, user: data.user });
+          } else {
+            setIsLogged({ logStatus: false, user: null });
+          }
         } else {
-          setIsLogged({ logStatus: false, user: null });
+          throw new Error("Not authenticated");
         }
       })
       .catch((error) => {

@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+client/build
 
 # misc
 .DS_Store
@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 send_to_remote.sh
+vhost.conf
+
+# Backup File postgres dump
+backup_file.dump

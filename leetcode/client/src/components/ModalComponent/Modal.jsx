@@ -31,6 +31,8 @@ const style = {
   overflowY: "auto", // Scroll content if overflow
 };
 
+const apiUrl = "https://server.leetcodejournal.com";
+
 function CustomModal({
   modalContent,
   open,
@@ -44,9 +46,10 @@ function CustomModal({
     try {
       const response = await axios({
         method: "delete",
-        url: `/question/delete/${modalContent.questionNo}`,
+        url: `${apiUrl}/question/delete/${modalContent.questionNo}`,
+        withCredentials: true,
       });
-      if (response.status == 200) {
+      if (response.status === 200) {
         Swal.fire({
           position: "top-end",
           icon: "success",

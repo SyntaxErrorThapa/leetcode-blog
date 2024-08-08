@@ -19,7 +19,7 @@ const port = 7000;
 // Config for cors
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow only this origin to access the resources
+    origin: "https://www.leetcodejournal.com", // Allow only this origin to access the resources
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true, // Allow cookies to be sent and received
   })
@@ -52,7 +52,7 @@ passport.use(
     {
       clientID: process.env.AUTHCLIENTID,
       clientSecret: process.env.AUTHCLIENTSECRET,
-      callbackURL: "http://localhost:7000/google/callback",
+      callbackURL: "https://server.leetcodejournal.com/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

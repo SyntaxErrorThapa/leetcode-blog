@@ -26,8 +26,8 @@ router.get("/auth/google", (req, res, next) => {
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/auth/status",
-    failureRedirect: "http://localhost:3000/",
+    successRedirect: "https://www.leetcodejournal.com/",
+    failureRedirect: "https://www.leetcodejournal.com/",
   })
 );
 
